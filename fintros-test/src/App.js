@@ -9,6 +9,7 @@ import { AppBar } from '@material-ui/core';
 import BlogItem from './components/blog-card';
 import { Row, Container } from 'react-bootstrap';
 import Spinner from './components/spinner';
+import { TextField } from '@material-ui/core';
 
 import { useBottomScrollListener } from 'react-bottom-scroll-listener';
 
@@ -28,15 +29,31 @@ const theme = createMuiTheme({
 
 function App() {
   const [postIDs, setIDs] = useState([]);
+  const [posts, setPosts] = useState([]);
   const [loaded, setLoaded] = useState(false);
   const [page, setPage] = useState(1);
   useEffect(() => {
+    let loadposts = [];
     fetch('https://hacker-news.firebaseio.com/v0/jobstories.json?print=pretty')
       .then((res) => res.json())
       .then((result) => {
         // console.log(result);
-        setIDs(result);
-        setLoaded(true);
+        // setIDs(result);
+        // setLoaded(true);
+        result.map((id, i) => {
+          fetch(
+            `https://hacker-news.firebaseio.com/v0/item/${id}.json?print=pretty`
+          )
+            .then((res) => res.json())
+            .then((answer) => {
+              // console.log(answer);
+              loadposts.push(answer);
+              // console.log(loadposts);
+              setPosts(loadposts);
+              setLoaded(true);
+              // console.log(posts);
+            });
+        });
       });
     // return () => {
     //   cleanup;
@@ -45,15 +62,21 @@ function App() {
 
   useBottomScrollListener(() => setPage(page + 1));
 
-  const displayPosts = postIDs.map((id, i) => {
-    if (i < 30 * page) return <BlogItem key={i} itemID={id} />;
+  console.log(posts[0]);
+
+  const displayPosts = posts.map((post, i) => {
+    console.log(post);
+    if (i < 30 * page) return <BlogItem post={post} />;
   });
   if (!loaded) return <Spinner />;
   return (
     <Container>
       <ThemeProvider theme={theme}>
         <div className="App">
-          <AppBar> Blog posts</AppBar>
+          <AppBar>
+            {' '}
+            <TextField color="#FFFFFF" /> Blog posts
+          </AppBar>
           <Row>{displayPosts}</Row>
         </div>
       </ThemeProvider>

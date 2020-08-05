@@ -34,28 +34,7 @@ import { getLinkPreview } from 'link-preview-js';
 //   console.log(it);
 // })();
 
-const BlogItem = ({ itemID }) => {
-  const [loaded, setLoaded] = useState(false);
-  const [post, setPost] = useState({});
-
-  useEffect(() => {
-    // (async () => {
-    //   let it = await grabity.grab(
-    //     `https://hacker-news.firebaseio.com/v0/item/${itemID}.json?print=pretty`
-    //   );
-
-    //   console.log(it);
-    // })();
-    fetch(
-      `https://hacker-news.firebaseio.com/v0/item/${itemID}.json?print=pretty`
-    )
-      .then((res) => res.json())
-      .then((result) => {
-        setLoaded(true);
-        setPost(result);
-      });
-  }, []);
-  if (!loaded) return <Spinner />;
+const BlogItem = ({ post }) => {
   return (
     <Col style={{ marginBottom: 10 }} xs={12} sm={6} md={4}>
       {/* <ThemeProvider theme={theme}> */}
@@ -64,7 +43,7 @@ const BlogItem = ({ itemID }) => {
         bgcolor="primary.background"
         color="primary.main"
       >
-        <div>{post.title}</div>
+        <div>asdf</div>
         <div>{post.text}</div>
       </Box>
       {/* </ThemeProvider> */}
