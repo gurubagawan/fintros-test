@@ -4,6 +4,7 @@ import { Col, Row } from 'react-bootstrap';
 // import { Container, Row, Col } from 'reactstrap';
 import Spinner from './spinner';
 import Box from '@material-ui/core/Box';
+import CardMedia from '@material-ui/core/CardMedia';
 import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
 import { purple } from '@material-ui/core/colors';
@@ -34,7 +35,7 @@ import { getLinkPreview } from 'link-preview-js';
 //   console.log(it);
 // })();
 
-const BlogItem = ({ itemID }) => {
+const BlogItem = ({ itemID, mainPost }) => {
   const [loaded, setLoaded] = useState(false);
   const [post, setPost] = useState({});
 
@@ -55,19 +56,39 @@ const BlogItem = ({ itemID }) => {
         setPost(result);
       });
   }, []);
+  if (mainPost) console.log(post);
   if (!loaded) return <Spinner />;
   return (
-    <Col style={{ marginBottom: 10 }} xs={12} sm={6} md={4}>
-      {/* <ThemeProvider theme={theme}> */}
-      <Box
-        style={{ padding: 10, height: `100%` }}
-        bgcolor="primary.background"
-        color="primary.main"
-      >
-        <div>{post.title}</div>
-        <div>{post.text}</div>
-      </Box>
-      {/* </ThemeProvider> */}
+    <Col
+      style={{ marginBottom: 30 }}
+      xs={12}
+      sm={mainPost ? 12 : 6}
+      md={mainPost ? 12 : 4}
+    >
+      <a href={post.url} style={{ textDecoration: 'none' }}>
+        <Box
+          style={{ padding: 10, height: `100%`, borderRadius: 5 }}
+          bgcolor="primary.card"
+          color="primary.main"
+          overflow="hidden"
+        >
+          <CardMedia
+            style={{
+              height: mainPost ? 300 : 150,
+              marginLeft: -10,
+              marginRight: -10,
+              marginTop: -10,
+            }}
+            image="https://i.ytimg.com/vi/MPV2METPeJU/maxresdefault.jpg"
+            title="Paella dish"
+            height="150"
+          />
+          <div style={{ paddingTop: 10 }} className="card-text">
+            <div>{post.title}</div>
+            <div>{post.text}</div>
+          </div>
+        </Box>
+      </a>
     </Col>
   );
 };
