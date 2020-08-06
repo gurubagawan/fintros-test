@@ -15,6 +15,8 @@ const BlogHeader = ({ changeTheme, isDark }) => {
         display: 'flex',
         justifyContent: 'center ',
         alignItems: 'center',
+        paddingBottom: 30,
+        paddingTop: 30,
       }}
       color="primary.titleColor"
       bgcolor="primary.card"
@@ -32,23 +34,23 @@ const BlogHeader = ({ changeTheme, isDark }) => {
             label="Dark theme"
           />
         </FormGroup>
+        <div
+          style={{
+            fontSize: 88,
+            fontWeight: 700,
+          }}
+        >
+          Hacker News
+        </div>
+        <div
+          style={{
+            fontSize: 18,
+            fontWeight: 400,
+          }}
+        >
+          The Hacker Blog
+        </div>
       </Container>
-      <div
-        style={{
-          fontSize: 88,
-          fontWeight: 700,
-        }}
-      >
-        Hacker News
-      </div>
-      <div
-        style={{
-          fontSize: 18,
-          fontWeight: 400,
-        }}
-      >
-        The Hacker Blog
-      </div>
     </Box>
   );
 };
