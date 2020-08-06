@@ -56,7 +56,6 @@ const BlogItem = ({ itemID, mainPost }) => {
         setPost(result);
       });
   }, []);
-  if (mainPost) console.log(post);
   if (!loaded) return <Spinner />;
   return (
     <Col

@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import Box from '@material-ui/core/Box';
+import FormGroup from '@material-ui/core/FormGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Switch from '@material-ui/core/Switch';
+import { Container } from 'react-bootstrap';
 
-const BlogHeader = () => {
+const BlogHeader = ({ changeTheme, isDark }) => {
   return (
     <Box
       style={{
-        height: 400,
+        height: 325,
         fontFamily: 'DM Sans, sans-serif',
         flexDirection: 'column',
         display: 'flex',
@@ -15,6 +19,20 @@ const BlogHeader = () => {
       color="primary.titleColor"
       bgcolor="primary.card"
     >
+      <Container>
+        <FormGroup style={{ float: 'right' }}>
+          <FormControlLabel
+            control={
+              <Switch
+                checked={isDark}
+                onChange={changeTheme}
+                name="lightSwitch"
+              />
+            }
+            label="Dark theme"
+          />
+        </FormGroup>
+      </Container>
       <div
         style={{
           fontSize: 88,
