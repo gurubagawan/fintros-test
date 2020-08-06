@@ -9,8 +9,9 @@ import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
 import { purple } from '@material-ui/core/colors';
 import Button from '@material-ui/core/Button';
+import grabity from 'grabity';
 
-import { getLinkPreview } from 'link-preview-js';
+// import { getLinkPreview } from 'link-preview-js';
 
 // const theme = createMuiTheme({
 //   palette: {
@@ -40,13 +41,19 @@ const BlogItem = ({ itemID, mainPost }) => {
   const [post, setPost] = useState({});
 
   useEffect(() => {
-    // (async () => {
-    //   let it = await grabity.grab(
-    //     `https://hacker-news.firebaseio.com/v0/item/${itemID}.json?print=pretty`
-    //   );
-
-    //   console.log(it);
-    // })();
+    if (mainPost) {
+      console.log('ran');
+      // (async (req, res) => {
+      //   let it = await grabity.grabIt(
+      //     `https://hacker-news.firebaseio.com/v0/item/${itemID}.json`
+      //   );
+      //   console.log(it);
+      //   res.json(it);
+      // })();
+      // getLinkPreview(
+      //   'https://hacker-news.firebaseio.com/v0/item/${itemID}.json?print=pretty'
+      // ).then((data) => console.debug(data));
+    }
     fetch(
       `https://hacker-news.firebaseio.com/v0/item/${itemID}.json?print=pretty`
     )
@@ -54,6 +61,7 @@ const BlogItem = ({ itemID, mainPost }) => {
       .then((result) => {
         setLoaded(true);
         setPost(result);
+        console.log(result);
       });
   }, []);
   if (!loaded) return <Spinner />;
@@ -83,7 +91,19 @@ const BlogItem = ({ itemID, mainPost }) => {
             height="150"
           />
           <div style={{ paddingTop: 10 }} className="card-text">
-            <div>{post.title}</div>
+            <Box
+              bgcolor="primary.tag"
+              color="primary.tagText"
+              style={{
+                padding: 2.5,
+                maxWidth: 50,
+                marginBottom: 10,
+                fontSize: 12.5,
+              }}
+            >
+              {post.type}
+            </Box>
+            <div style={{ fontSize: 20, fontWeight: 500 }}>{post.title}</div>
             <div>{post.text}</div>
           </div>
         </Box>

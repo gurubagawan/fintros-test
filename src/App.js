@@ -27,6 +27,8 @@ const lightTheme = createMuiTheme({
       background: '#f4f1ee',
       card: '#FFFFFF',
       titleColor: '#21313C',
+      tag: '#212121',
+      tagText: '#FFFFFF',
     },
     secondary: {
       // This is green.A700 as hex.
@@ -43,6 +45,8 @@ const darkTheme = createMuiTheme({
       background: '#192428',
       card: '#2d383c',
       titleColor: '#f4f1ee',
+      tag: '#192428',
+      tagText: '#FFFFFF',
     },
     secondary: {
       // This is green.A700 as hex.
@@ -96,7 +100,6 @@ function App() {
   };
 
   if (!loaded) return <Spinner />;
-  console.log(postView);
   return (
     <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
       <BlogHeader changeTheme={() => setTheme(!isDark)} isDark={isDark} />
