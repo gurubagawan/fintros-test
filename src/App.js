@@ -1,18 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import logo from './logo.svg';
 import './App.css';
 import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
-import { purple } from '@material-ui/core/colors';
-import { AppBar } from '@material-ui/core';
 import BlogItem from './components/blog-card';
 import { Row, Container } from 'react-bootstrap';
 import Box from '@material-ui/core/Box';
 import Spinner from './components/spinner';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
-import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 
@@ -22,7 +18,6 @@ import BlogHeader from './components/header';
 const lightTheme = createMuiTheme({
   palette: {
     primary: {
-      // Purple and green play nicely together.
       main: '#212121',
       background: '#f4f1ee',
       card: '#FFFFFF',
@@ -31,7 +26,6 @@ const lightTheme = createMuiTheme({
       tagText: '#FFFFFF',
     },
     secondary: {
-      // This is green.A700 as hex.
       main: '#11cb5f',
     },
   },
@@ -40,7 +34,6 @@ const lightTheme = createMuiTheme({
 const darkTheme = createMuiTheme({
   palette: {
     primary: {
-      // Purple and green play nicely together.
       main: '#FFFFFF',
       background: '#192428',
       card: '#2d383c',
@@ -49,7 +42,6 @@ const darkTheme = createMuiTheme({
       tagText: '#FFFFFF',
     },
     secondary: {
-      // This is green.A700 as hex.
       main: '#11cb5f',
     },
   },
@@ -65,13 +57,9 @@ function App() {
     fetch('https://hacker-news.firebaseio.com/v0/jobstories.json?print=pretty')
       .then((res) => res.json())
       .then((result) => {
-        // console.log(result);
         setIDs(result);
         setLoaded(true);
       });
-    // return () => {
-    //   cleanup;
-    // };
   }, []);
 
   useBottomScrollListener(() => setPage(page + 1));

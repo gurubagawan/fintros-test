@@ -1,50 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Col, Row } from 'react-bootstrap';
-// import grabity from 'grabity';
-// import { Container, Row, Col } from 'reactstrap';
+import { Col } from 'react-bootstrap';
 import Spinner from './spinner';
 import Box from '@material-ui/core/Box';
 import CardMedia from '@material-ui/core/CardMedia';
-import { createMuiTheme } from '@material-ui/core/styles';
-import { ThemeProvider } from '@material-ui/styles';
-import { purple } from '@material-ui/core/colors';
-import Button from '@material-ui/core/Button';
 import grabity from 'grabity';
-// import grabFunction from './grabbity';
-
-const grabFunction = async (url) => {
-  try {
-    let metaData = await grabity.grabIt('');
-    console.log(metaData);
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-// import { getLinkPreview } from 'link-preview-js';
-
-// const theme = createMuiTheme({
-//   palette: {
-//     primary: {
-//       // Purple and green play nicely together.
-//       main: purple[500],
-//     },
-//     secondary: {
-//       // This is green.A700 as hex.
-//       main: '#11cb5f',
-//     },
-//   },
-// });
-
-// let grabity = require('grabity');
-
-// (async () => {
-//   let it = await grabity.grabIt(
-//     'https://hacker-news.firebaseio.com/v0/item/24061224.json?print=pretty'
-//   );
-
-//   console.log(it);
-// })();
 
 const BlogItem = ({ itemID, mainPost }) => {
   const [loaded, setLoaded] = useState(false);
@@ -59,7 +18,6 @@ const BlogItem = ({ itemID, mainPost }) => {
       .then((result) => {
         setLoaded(true);
         setPost(result);
-        // console.log(result);
       });
   }, []);
   if (!loaded) return <Spinner />;
@@ -94,7 +52,6 @@ const BlogItem = ({ itemID, mainPost }) => {
                 marginTop: -10,
               }}
               image={postMeta.image}
-              title="Paella dish"
               height="150"
             />
           )}
