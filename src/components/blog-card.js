@@ -10,6 +10,16 @@ import { ThemeProvider } from '@material-ui/styles';
 import { purple } from '@material-ui/core/colors';
 import Button from '@material-ui/core/Button';
 import grabity from 'grabity';
+// import grabFunction from './grabbity';
+
+const grabFunction = async (url) => {
+  try {
+    let metaData = await grabity.grabIt('');
+    console.log(metaData);
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 // import { getLinkPreview } from 'link-preview-js';
 
@@ -39,21 +49,9 @@ import grabity from 'grabity';
 const BlogItem = ({ itemID, mainPost }) => {
   const [loaded, setLoaded] = useState(false);
   const [post, setPost] = useState({});
+  const [postMeta, setMeta] = useState({});
 
   useEffect(() => {
-    if (mainPost) {
-      console.log('ran');
-      // (async (req, res) => {
-      //   let it = await grabity.grabIt(
-      //     `https://hacker-news.firebaseio.com/v0/item/${itemID}.json`
-      //   );
-      //   console.log(it);
-      //   res.json(it);
-      // })();
-      // getLinkPreview(
-      //   'https://hacker-news.firebaseio.com/v0/item/${itemID}.json?print=pretty'
-      // ).then((data) => console.debug(data));
-    }
     fetch(
       `https://hacker-news.firebaseio.com/v0/item/${itemID}.json?print=pretty`
     )
@@ -61,10 +59,18 @@ const BlogItem = ({ itemID, mainPost }) => {
       .then((result) => {
         setLoaded(true);
         setPost(result);
-        console.log(result);
+        // console.log(result);
       });
   }, []);
   if (!loaded) return <Spinner />;
+  (async () => {
+    try {
+      let metaData = await grabity.grabIt(post.url);
+      setMeta(metaData);
+    } catch (error) {
+      console.error(error);
+    }
+  })();
   return (
     <Col
       style={{ marginBottom: 30 }}
@@ -79,17 +85,19 @@ const BlogItem = ({ itemID, mainPost }) => {
           color="primary.main"
           overflow="hidden"
         >
-          <CardMedia
-            style={{
-              height: mainPost ? 300 : 150,
-              marginLeft: -10,
-              marginRight: -10,
-              marginTop: -10,
-            }}
-            image="https://i.ytimg.com/vi/MPV2METPeJU/maxresdefault.jpg"
-            title="Paella dish"
-            height="150"
-          />
+          {postMeta.image && (
+            <CardMedia
+              style={{
+                height: mainPost ? 300 : 150,
+                marginLeft: -10,
+                marginRight: -10,
+                marginTop: -10,
+              }}
+              image={postMeta.image}
+              title="Paella dish"
+              height="150"
+            />
+          )}
           <div style={{ paddingTop: 10 }} className="card-text">
             <Box
               bgcolor="primary.tag"
