@@ -4,6 +4,39 @@ import Spinner from './spinner';
 import Box from '@material-ui/core/Box';
 import CardMedia from '@material-ui/core/CardMedia';
 import grabity from 'grabity';
+import styled from 'styled-components';
+
+const TypeBox = styled.div`
+  padding: 2.5px;
+  max-width: 50px;
+  margin-bottom: 10px;
+  font-size: 12.5px;
+`;
+
+const TitleBox = styled.div`
+  font-size: 20px;
+  font-weight: 500;
+`;
+
+const MediaBox = styled.div`
+  height: ${(props) => (props.mainPost ? '300px' : '150px')};
+  margin-left: -10px;
+  margin-right: -10px;
+  margin-top: -10px;
+`;
+
+const LinkTag = styled.a`
+  text-decoration: none;
+`;
+
+const TextBox = styled.div`
+  padding-top: 10px;
+`;
+
+const BlogBox = styled.div`
+  padding: 10px;
+  height: 100%;
+`;
 
 const BlogItem = ({ itemID, mainPost }) => {
   const [loaded, setLoaded] = useState(false);
@@ -36,43 +69,31 @@ const BlogItem = ({ itemID, mainPost }) => {
       sm={mainPost ? 12 : 6}
       md={mainPost ? 12 : 4}
     >
-      <a href={post.url} style={{ textDecoration: 'none' }}>
+      <LinkTag href={post.url}>
         <Box
-          style={{ padding: 10, height: `100%`, borderRadius: 5 }}
           bgcolor="primary.card"
           color="primary.main"
+          style={{ height: '100%' }}
           overflow="hidden"
         >
-          {postMeta.image && (
-            <CardMedia
-              style={{
-                height: mainPost ? 300 : 150,
-                marginLeft: -10,
-                marginRight: -10,
-                marginTop: -10,
-              }}
-              image={postMeta.image}
-              height="150"
-            />
-          )}
-          <div style={{ paddingTop: 10 }} className="card-text">
-            <Box
-              bgcolor="primary.tag"
-              color="primary.tagText"
-              style={{
-                padding: 2.5,
-                maxWidth: 50,
-                marginBottom: 10,
-                fontSize: 12.5,
-              }}
-            >
-              {post.type}
-            </Box>
-            <div style={{ fontSize: 20, fontWeight: 500 }}>{post.title}</div>
-            <div>{post.text}</div>
-          </div>
+          <BlogBox>
+            {postMeta.image && (
+              <MediaBox>
+                <CardMedia image={postMeta.image} />
+              </MediaBox>
+            )}
+            <TextBox>
+              <TypeBox>
+                <Box bgcolor="primary.tag" color="primary.tagText">
+                  {post.type}
+                </Box>
+              </TypeBox>
+              <TitleBox>{post.title}</TitleBox>
+              <div>{post.text}</div>
+            </TextBox>
+          </BlogBox>
         </Box>
-      </a>
+      </LinkTag>
     </Col>
   );
 };
